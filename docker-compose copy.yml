@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  # Nodo Shard 1 - jaguar
+  jaguar:
+    image: mongo
+    container_name: jaguar
+    command: mongod --shardsvr --replSet shard-tabacon --port 27018
+    ports:
+      - "27018:27018"
+    volumes:
+      - ./data/jaguar:/data/db
+    networks:
+      - mongo-net
+    environment:
+      - MONGO_INITDB_REPLICA_SET_NAME=shard-tabacon
+
+  # Nodo Shard 2 - manigordo
+  manigordo:
+    image: mongo
+    container_name: manigordo
+    command: mongod --shardsvr --replSet shard-tabacon --port 27018
+    ports:
+      - "27019:27018"
+    volumes:
+      - ./data/manigordo:/data/db
+    networks:
+      - mongo-net
+
+  # Nodo Shard 3 - yaguarundi
+  yaguarundi:
+    image: mongo
+    container_name: yaguarundi
+    command: mongod --shardsvr --replSet shard-tabacon --port 27018
+    ports:
+      - "27020:27018"
+    volumes:
+      - ./data/yaguarundi:/data/db
+    networks:
+      - mongo-net
+
+  # Nodo Shard 4 - margay
+  margay:
+    image: mongo
+    container_name: margay
+    command: mongod --shardsvr --replSet shard-tabacon --port 27018
+    ports:
+      - "27021:27018"
+    volumes:
+      - ./data/margay:/data/db
+    networks:
+      - mongo-net
+
+  # Router - caucel
+  caucel:
+    image: mongo
+    container_name: caucel
+    command: mongos --configdb config-hibisco/puma:27019,tigrillo:27019 --port 27017
+    ports:
+      - "27017:27017"
+    networks:
+      - mongo-net
+
+  # Configuration server 1 - tigrillo
+  tigrillo:
+    image: mongo
+    container_name: tigrillo
+    command: mongod --configsvr --replSet config-hibisco --port 27019
+    ports:
+      - "27022:27019"
+    volumes:
+      - ./data/tigrillo:/data/db
+    networks:
+      - mongo-net
+
+  # Configuration server 2 - puma
+  puma:
+    image: mongo
+    container_name: puma
+    command: mongod --configsvr --replSet config-hibisco --port 27019
+    ports:
+      - "27023:27019"
+    volumes:
+      - ./data/puma:/data/db
+    networks:
+      - mongo-net
+
+networks:
+  mongo-net:
+    driver: bridge

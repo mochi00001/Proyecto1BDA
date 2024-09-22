@@ -1,0 +1,22 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/db:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: herencias  # Asegúrate de inicializar la base de datos si es necesario
+  
+  webapp:
+    build: ./webapp
+    container_name: webapp
+    command: python app.py  # Ejecuta el script directamente
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./webapp:/webapp
+    depends_on:
+      - mongo
