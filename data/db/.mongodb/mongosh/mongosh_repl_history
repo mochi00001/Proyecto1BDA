@@ -1,0 +1,7 @@
+db.Recetas.find().pretty()
+db.Poblaciones.find().pretty()
+db.Ingredientes.find().pretty()
+db.Festividades.find().pretty()
+show collections
+use herencias
+show dbs
