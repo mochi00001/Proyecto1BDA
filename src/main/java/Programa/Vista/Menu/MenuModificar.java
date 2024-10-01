@@ -4,6 +4,7 @@
  */
 package Programa.Vista.Menu;
 
+import Programa.Controlador.Comidas;
 import Programa.Vista.Grupo.ModificarGrupos;
 import Programa.Vista.Ingredientes.ModificarIngredientes;
 import Programa.Vista.Receta.ModificarRecetas;
@@ -15,13 +16,28 @@ import Programa.Vista.Usuario.ModificarUsuario;
  * @author danie
  */
 public class MenuModificar extends javax.swing.JFrame {
+    Comidas rolInvestigador = new Comidas();
 
     /**
      * Creates new form MenuModificar
      */
     public MenuModificar() {
         initComponents();
-        this.setLocationRelativeTo(null);        
+        this.setLocationRelativeTo(null);      
+        
+        if(rolInvestigador.tipoRol()==true){
+            jButton1.setEnabled(false);
+            jButton5.setEnabled(false);
+            jButton2.setEnabled(false);
+            jButton4.setEnabled(false);
+            jButton3.setEnabled(true);
+        }else{
+           jButton3.setEnabled(false);
+           jButton1.setEnabled(true);
+           jButton5.setEnabled(true);
+           jButton2.setEnabled(true);
+           jButton4.setEnabled(true);
+        }
     }
 
     /**
@@ -34,7 +50,6 @@ public class MenuModificar extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -49,13 +64,6 @@ public class MenuModificar extends javax.swing.JFrame {
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
-            }
-        });
-
-        jButton7.setText("Cerrar programa");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
             }
         });
 
@@ -114,7 +122,6 @@ public class MenuModificar extends javax.swing.JFrame {
                             .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
@@ -133,11 +140,9 @@ public class MenuModificar extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jButton6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton7)
-                .addGap(18, 18, 18))
+                .addContainerGap())
         );
 
         pack();
@@ -148,10 +153,6 @@ public class MenuModificar extends javax.swing.JFrame {
         PasarVentana.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ModificarGrupos PasarVentana = new ModificarGrupos();
@@ -225,7 +226,6 @@ public class MenuModificar extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

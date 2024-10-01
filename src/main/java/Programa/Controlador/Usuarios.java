@@ -4,7 +4,6 @@
  */
 package Programa.Controlador;
 
-import Programa.Controlador.Mongo;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCursor;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 
 public class Usuarios {
     private MongoDatabase database;
+    Comidas IndentificadorRol = new Comidas (); 
 
     // Constructor
     public Usuarios(Mongo mongoConnection) {
@@ -24,6 +24,7 @@ public class Usuarios {
 
     // Método para verificar si un usuario existe y su contraseña es correcta
     public boolean verificarUsuario(String pCedula, String pContrasenna) {
+        
         MongoCollection<Document> collection = database.getCollection("Usuarios");
         try (MongoCursor<Document> cursor = collection.find(eq("cedula", pCedula)).iterator()) {
             while (cursor.hasNext()) {
@@ -31,6 +32,11 @@ public class Usuarios {
                 String contraseña = doc.getString("Contraseña");
                 System.out.println("Verificando usuario: " + pCedula + " con contraseña: " + pContrasenna);
                 if (pContrasenna.equals(contraseña)) {
+                    if(doc.getString("Tipo").equals("Investigador")){
+                        IndentificadorRol.esInvestigador();
+                    }else{
+                        IndentificadorRol.esColaborador();
+                    }                    
                     return true;
                 }
             }

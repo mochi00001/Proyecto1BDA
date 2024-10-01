@@ -6,6 +6,7 @@ package Programa.Vista.Grupo;
 
 import Programa.Vista.Menu.MenuLeer;
 import Programa.Controlador.Grupo;
+import Programa.Controlador.Mongo;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,12 +20,16 @@ public class LeerGrupos extends javax.swing.JFrame {
     
     DefaultTableModel model = new DefaultTableModel();
     private Grupo controladorGrupo; // Instancia del controlador
+    private Mongo mongoConnection; // Añadimos la conexión Mongo
+    
     /**
      * Creates new form LeerGrupos
      */
     public LeerGrupos() {
         initComponents();
-        controladorGrupo = new Grupo(); // Inicializamos el controlador
+        mongoConnection = new Mongo(); // Iniciamos la conexión a MongoDB
+        controladorGrupo = new Grupo(mongoConnection); // Pasamos la conexión al controlador
+        
         model.addColumn("Nombre");
         model.addColumn("Área Geográfica");
         model.addColumn("Provincia");
@@ -133,28 +138,32 @@ public class LeerGrupos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void cargarDatos(){
-        String[] datos = new String[9];
-
-        List<Document> indigenousGroups;
-
-        // Usamos el controlador para obtener la lista de grupos
-        indigenousGroups = controladorGrupo.listaGrupos();
-
-        if (indigenousGroups != null && !indigenousGroups.isEmpty()) {
+        Grupo m = new Grupo();
+        String [] datos = new String [10];
+       
+        List<Document> indigenousGroups ;
+        
+        indigenousGroups  = m.listaGrupos();
+        
+         if (indigenousGroups != null && !indigenousGroups.isEmpty()) {
             for (Document group : indigenousGroups) {
-
+                
                 datos[0] = group.getString("name");
+
                 // Ubicación
                 Document location = (Document) group.get("location");
-                datos[1] = location.getString("geographic_area");
+                datos[1]= location.getString("geographic_area");
                 datos[2] = location.getString("province");
+
                 // Población
                 Document population = (Document) group.get("population");
                 datos[3] = String.valueOf(population.getInteger("year"));
                 datos[4] = String.valueOf(population.getInteger("number"));
+
                 // Idiomas Hablados
                 List<String> languagesSpoken = (List<String>) group.get("languages_spoken");
-                datos[5] = String.join(", ", languagesSpoken);
+                datos[5]= String.join(", ", languagesSpoken);
+
                 // Estructura Social
                 Document socialStructure = (Document) group.get("social_structure");
                 datos[6] = String.join(", ", (List<String>) socialStructure.get("clans"));
@@ -163,8 +172,8 @@ public class LeerGrupos extends javax.swing.JFrame {
                 model.addRow(datos);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "No hay grupos indígenas", "Grupos indígenas", JOptionPane.WARNING_MESSAGE);
-        } 
+            JOptionPane.showMessageDialog(this, "No hay grupos indigenas", "Grupos indigenas", JOptionPane.WARNING_MESSAGE);
+        }       
     }
     
     

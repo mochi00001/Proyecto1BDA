@@ -7,6 +7,7 @@ package Programa.Vista.Receta;
 import Programa.Vista.Menu.MenuLeer;
 import Programa.Controlador.Recetas;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
 
@@ -23,7 +24,7 @@ public class LeerRecetas extends javax.swing.JFrame {
     public LeerRecetas() {
         initComponents();
         model.addColumn("Nombre");
-        model.addColumn("Ingredientes y Cantidades");
+        model.addColumn("Ingredientes");
         model.addColumn("Preparacion");
         model.addColumn("Tiempo");
         model.addColumn("Ocasion");
@@ -168,12 +169,84 @@ public class LeerRecetas extends javax.swing.JFrame {
         }
     } 
     
+    public String formatearDocument(Document doc) {
+        // Convertir el Document a String
+        String jsonString = doc.toJson();
+
+        // Quitar los caracteres {}, comillas dobles, y el formateo adicional
+        String resultado = jsonString.replace("{", "")   // Quitar llaves de apertura
+                                    .replace("}", "")   // Quitar llaves de cierre
+                                    .replace("\"", "")  // Quitar comillas dobles
+                                    .trim();            // Eliminar espacios en blanco al inicio o fin
+
+        return resultado;
+    }
+    
+    private void cargarDatosRecetas() {
+        // Instancia de la clase que maneja las recetas
+        Recetas m = new Recetas(); // Asegúrate de que esta clase tenga los métodos necesarios
+        String[] datos = new String[11]; // Ajusta el tamaño del arreglo según la información que desees cargar
+
+        // Obtener la lista de recetas
+        List<Document> recetas = m.obtenerRecetas();
+
+        if (recetas != null && !recetas.isEmpty()) {
+            for (Document receta : recetas) {
+                datos[0] = receta.getString("recipe_name"); // Nombre de la receta
+
+                // Obtener la lista de ingredientes de la receta
+                List<Document> ingredientes = (List<Document>) receta.get("ingredients");
+                if (ingredientes != null && !ingredientes.isEmpty()) {
+                    StringBuilder ingredientesStr = new StringBuilder();
+                    for (Document ingrediente : ingredientes) {
+                        ingredientesStr.append(ingrediente.getString("name_spanish")).append(", ");
+                    }
+                    // Eliminar la última coma y espacio
+                    if (ingredientesStr.length() > 0) {
+                        ingredientesStr.setLength(ingredientesStr.length() - 2); 
+                    }
+                    datos[1] = ingredientesStr.toString(); // Listado de ingredientes
+                } else {
+                    datos[1] = "Sin ingredientes disponibles"; // Mensaje en caso de no tener ingredientes
+                }
+                
+                // Obtener y formatear los pasos de preparación
+                List<String> preparationSteps = (List<String>) receta.get("preparation_steps");
+                if (preparationSteps != null && !preparationSteps.isEmpty()) {
+                    StringBuilder stepsStr = new StringBuilder();
+                    for (String step : preparationSteps) {
+                        stepsStr.append(step).append("; ");
+                    }
+                    // Eliminar el último punto y coma y espacio
+                    if (stepsStr.length() > 0) {
+                        stepsStr.setLength(stepsStr.length() - 2);
+                    }
+                    datos[2] = stepsStr.toString(); // Pasos de preparación
+                } else {
+                    datos[2] = "Sin pasos de preparación disponibles"; // Mensaje en caso de no tener pasos
+                }
+                
+                
+
+                datos[3] = receta.getString("preparation_time"); // Tiempo de preparación
+                datos[4] = receta.getString("occasion"); // Ocasión para la que se prepara
+
+                // Información sobre quién prepara
+                datos[5] = receta.getString("who_prepares");
+                datos[6] = receta.getBoolean("used_for_festivities") ? "Sí" : "No"; // Usado para festividades
+
+                
+
+                // Añadir la fila al modelo de la tabla
+                model.addRow(datos);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró la información de recetas", "Error al cargar recetas", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        Recetas controladorRecetas = new Recetas();
-        List<Document> recetas = controladorRecetas.obtenerRecetas();
-        
-        // Imprimir las recetas obtenidas
-        imprimirRecetas(recetas);
+        cargarDatosRecetas();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**

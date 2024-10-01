@@ -6,6 +6,7 @@ package Programa.Vista.Grupo;
 
 import Programa.Vista.Menu.MenuEliminar;
 import Programa.Controlador.Grupo;
+import Programa.Controlador.Mongo;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.bson.Document;
@@ -18,13 +19,16 @@ public class EliminarGrupo extends javax.swing.JFrame {
 
     // Instanciamos el controlador del grupo
     private Grupo controladorGrupo;
+    private Mongo mongoConnection; // Añadimos la conexión Mongo
+    
     /**
      * Creates new form EliminarGrupo
      */
     public EliminarGrupo() {
         initComponents();
         this.setLocationRelativeTo(null);   
-        controladorGrupo = new Grupo(); // Inicializamos el controlador
+        mongoConnection = new Mongo(); // Iniciamos la conexión a MongoDB
+        controladorGrupo = new Grupo(mongoConnection); // Pasamos la conexión al controlador
     }
 
     /**
@@ -257,13 +261,21 @@ public class EliminarGrupo extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
  
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // Verificar si el grupo existe
-        if (!controladorGrupo.grupoIndigenaExiste(nombreText.getText())) {
-            JOptionPane.showMessageDialog(this, "El grupo no existe", "Error al eliminar", JOptionPane.WARNING_MESSAGE);
-        } else {
-            // Eliminar el grupo usando el controlador
-            controladorGrupo.eliminarGrupo(nombreText.getText());
-            limpiarCampos();
+        Grupo m = new Grupo();
+        
+        if(!m.grupoIndigenaExiste(nombreText.getText())){
+            JOptionPane.showMessageDialog(this, "Usuario no existe", "Error al registrar", JOptionPane.WARNING_MESSAGE);
+        }else{
+            m.eliminarGrupo(nombreText.getText());
+            nombreText.setText("");
+            ubicacionLabel.setText("Ubicación geografica");
+            provinciaLabel.setText("Provincia");
+            cantidadLabel.setText("Cantidad de miembros");
+            lenguasLabel.setText("Lenguas");
+            clanesLabel.setText("Clanes");
+            liderazgoLabel.setText("Liderazgo");
+            practicasLabel.setText("Practicas Culturales");
+            
             JOptionPane.showMessageDialog(this, "Información eliminada", "Datos Eliminados", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -284,16 +296,34 @@ public class EliminarGrupo extends javax.swing.JFrame {
     }//GEN-LAST:event_nombreTextActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // Verificar si el grupo existe antes de proceder
-        if (!controladorGrupo.grupoIndigenaExiste(nombreText.getText())) {
-            JOptionPane.showMessageDialog(this, "El grupo no existe", "Error al buscar", JOptionPane.WARNING_MESSAGE);
-        } else {
-            if (nombreText.getText().isEmpty() || nombreText.getText().isBlank()) {
-                JOptionPane.showMessageDialog(this, "Escriba lo que se le solicita", "Datos incompletos", JOptionPane.WARNING_MESSAGE);
+        Grupo m = new Grupo();
+        if(!m.grupoIndigenaExiste(nombreText.getText())){
+            JOptionPane.showMessageDialog(this, "El grupo no existe", "Error al modificar", JOptionPane.WARNING_MESSAGE);
+        }else{
+            if (nombreText.getText().isEmpty() || nombreText.getText().isBlank()){
+
+                JOptionPane.showMessageDialog(this, "Escriba lo que se le solicita", "No se a completado los datos", JOptionPane.WARNING_MESSAGE);
             } else {
-                // Consultar la información del grupo y actualizar la vista
-                Document singleGroup = controladorGrupo.consultarGrupo(nombreText.getText());
-                actualizarVista(singleGroup);
+                Document singleGroup  = m.consultarGrupo(nombreText.getText());
+
+                // Ubicación
+                Document location = (Document) singleGroup.get("location");
+                ubicacionLabel.setText( location.getString("geographic_area"));
+                provinciaLabel.setText( location.getString("province"));
+
+                // Población
+                Document population = (Document) singleGroup.get("population");
+                cantidadLabel.setText( String.valueOf(population.getInteger("number")));
+
+                // Idiomas Hablados
+                List<String> languagesSpoken = (List<String>) singleGroup.get("languages_spoken");
+                lenguasLabel.setText(  String.join(", ", languagesSpoken));
+
+                // Estructura Social
+                Document socialStructure = (Document) singleGroup.get("social_structure");
+                clanesLabel.setText( String.join(", ", (List<String>) socialStructure.get("clans")));
+                liderazgoLabel.setText(socialStructure.getString("leadership"));
+                practicasLabel.setText( socialStructure.getString("cultural_practices"));
                 JOptionPane.showMessageDialog(this, "Información encontrada", "Información del grupo", JOptionPane.INFORMATION_MESSAGE);
             }
         }

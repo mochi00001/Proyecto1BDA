@@ -6,7 +6,15 @@ package Programa.Vista.Ingredientes;
 
 import Programa.Vista.Menu.MenuCrear;
 import Programa.Controlador.Ingredientes;
+import Programa.Controlador.Mongo;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -14,12 +22,26 @@ import javax.swing.JOptionPane;
  */
 public class CrearIngredientes extends javax.swing.JFrame {
 
+    DefaultTableModel mt = new DefaultTableModel();
+    DefaultTableModel mt1 = new DefaultTableModel();
+
     /**
      * Creates new form CrearIngredientes
      */
     public CrearIngredientes() {
         initComponents();
         this.setLocationRelativeTo(null);
+        cultiva.setSelected(true);
+        
+        String ids []={"Grupo", "Nombre"};
+        
+        mt.setColumnIdentifiers(ids);
+        jTable2.setModel(mt);
+        
+        String ids2 []={"Nombre Grupo", "Frecuencia", "Usos"};
+        
+        mt1.setColumnIdentifiers(ids2);
+        jTable3.setModel(mt1);
     }
 
     /**
@@ -32,15 +54,10 @@ public class CrearIngredientes extends javax.swing.JFrame {
     private void initComponents() {
 
         existencia = new javax.swing.ButtonGroup();
-        jLabel6 = new javax.swing.JLabel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        nivelConsumoTextArea = new javax.swing.JTextArea();
-        jLabel2 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
-        nombreIndigenaText = new javax.swing.JTextField();
-        jButton7 = new javax.swing.JButton();
         nombreText = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
         ubicacionText = new javax.swing.JTextField();
@@ -48,34 +65,40 @@ public class CrearIngredientes extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         cultiva = new javax.swing.JRadioButton();
         encuentra = new javax.swing.JRadioButton();
+        jLabel13 = new javax.swing.JLabel();
+        Lengua1 = new javax.swing.JTextField();
+        addBoton1 = new javax.swing.JButton();
+        deleteBoton1 = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel15 = new javax.swing.JLabel();
+        Lengua2 = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        Lengua3 = new javax.swing.JTextField();
+        addBoton2 = new javax.swing.JButton();
+        deleteBoton2 = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jLabel18 = new javax.swing.JLabel();
+        Lengua4 = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gastronomia Indigena");
-
-        jLabel6.setText("Nivel de consulmo:");
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel3.setText("Crear un nuevo ingrediente");
 
         jLabel1.setText("Nombre en español:");
 
-        nivelConsumoTextArea.setColumns(20);
-        nivelConsumoTextArea.setRows(5);
-        jScrollPane1.setViewportView(nivelConsumoTextArea);
-
-        jLabel2.setText("Nombre en lengua indigena:");
-
         jButton6.setText("Registrar");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
-            }
-        });
-
-        jButton7.setText("Cerrar programa");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
             }
         });
 
@@ -107,24 +130,85 @@ public class CrearIngredientes extends javax.swing.JFrame {
         existencia.add(encuentra);
         encuentra.setText("Se encuentra");
 
+        jLabel13.setText("Lenguaje indigena:");
+
+        addBoton1.setText("Añadir");
+        addBoton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBoton1ActionPerformed(evt);
+            }
+        });
+
+        deleteBoton1.setText("Borrar");
+        deleteBoton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBoton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setText("Nombre en lengua indigena:");
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable2);
+
+        jLabel15.setText("Nombre:");
+
+        jLabel16.setText("Nombre Grupo:");
+
+        addBoton2.setText("Añadir");
+        addBoton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBoton2ActionPerformed(evt);
+            }
+        });
+
+        deleteBoton2.setText("Borrar");
+        deleteBoton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBoton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setText("Nombre en lengua indigena:");
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(jTable3);
+
+        jLabel18.setText("Frecuencia:");
+
+        jLabel19.setText("Usos:");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nombreText)
-                            .addComponent(nombreIndigenaText, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(95, 95, 95))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel5)
@@ -135,17 +219,69 @@ public class CrearIngredientes extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel4)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(ubicacionText, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(ubicacionText, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Lengua1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(addBoton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(deleteBoton1))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Lengua2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(41, 41, 41)
+                            .addComponent(jLabel14)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(45, 45, 45))
+                        .addComponent(nombreText, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel18)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Lengua4, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel16)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Lengua3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(addBoton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(deleteBoton2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 9, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel17)
+                        .addGap(93, 93, 93))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(215, 215, 215))
             .addGroup(layout.createSequentialGroup()
-                .addGap(96, 96, 96)
+                .addGap(216, 216, 216)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -155,71 +291,158 @@ public class CrearIngredientes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(nombreText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombreIndigenaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ubicacionText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(cultiva)
-                    .addComponent(encuentra))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Lengua3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Lengua4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel19)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addBoton2)
+                            .addComponent(deleteBoton2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(nombreText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ubicacionText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(cultiva)
+                            .addComponent(encuentra))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Lengua1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Lengua2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addBoton1)
+                            .addComponent(deleteBoton1))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton7)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+     // Método que extrae los valores del JTable y los convierte en una lista de Map<String, String>
+    public List<Map<String, String>> obtenerDatosIndigenas(JTable table) {
+        // Obtener el número de filas de la tabla
+        int filas = table.getRowCount();
+
+        // Crear la lista para almacenar los mapas de cada grupo indígena
+        List<Map<String, String>> listaMapas = new ArrayList<>();
+
+        // Obtener el modelo de la tabla
+        TableModel modelo = table.getModel();
+
+        // Iterar sobre las filas del JTable
+        for (int i = 0; i < filas; i++) {
+            // Obtener el nombre del grupo indígena (columna 0) y su idioma (columna 1)
+            String grupoIndigena = modelo.getValueAt(i, 0).toString();
+            String idioma = modelo.getValueAt(i, 1).toString();
+
+            // Crear un Map para almacenar el grupo indígena y su idioma
+            Map<String, String> mapa = new HashMap<>();
+            mapa.put(grupoIndigena, idioma);
+
+            // Agregar el mapa a la lista
+            listaMapas.add(mapa);
+        }
+
+        // Retornar la lista de mapas
+        return listaMapas;
+    }
+    
+    public static Map<String, Map<String, String>> obtenerConsumoPorGrupo(JTable table) {
+        // Obtener el número de filas de la tabla
+        int filas = table.getRowCount();
+
+        // Crear el mapa que almacenará los grupos indígenas y sus detalles de consumo
+        Map<String, Map<String, String>> consumptionByGroup = new HashMap<>();
+
+        // Obtener el modelo de la tabla
+        TableModel modelo = table.getModel();
+
+        // Iterar sobre las filas del JTable
+        for (int i = 0; i < filas; i++) {
+            // Obtener el nombre del grupo indígena (columna 0)
+            String grupoIndigena = modelo.getValueAt(i, 0).toString();
+
+            // Obtener la frecuencia de uso (columna 1)
+            String frecuencia = modelo.getValueAt(i, 1).toString();
+
+            // Obtener los usos (columna 2)
+            String usos = modelo.getValueAt(i, 2).toString();
+
+            // Crear un mapa para almacenar la frecuencia y usos del grupo indígena
+            Map<String, String> detallesConsumo = new HashMap<>();
+            detallesConsumo.put("frequency", frecuencia);
+            detallesConsumo.put("uses", usos);
+
+            // Agregar este mapa al mapa principal bajo el nombre del grupo indígena
+            consumptionByGroup.put(grupoIndigena, detallesConsumo);
+        }
+
+        // Retornar el mapa anidado
+        return consumptionByGroup;
+    }
+    
+    
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // Verificar si los campos están completos
+        // Llamar al método para obtener la lista de Map desde el JTable
+        List<Map<String, String>> listOfLanguages = obtenerDatosIndigenas(jTable2);        
+        Map<String, Map<String, String>> consumptionByGroup = obtenerConsumoPorGrupo(jTable3);
+        
+        
+        Ingredientes m = new Ingredientes();
+        boolean existencia;
+                
         if (nombreText.getText().isEmpty() || nombreText.getText().isBlank()
-            || nombreIndigenaText.getText().isBlank() || nombreIndigenaText.getText().isEmpty()
-            || ubicacionText.getText().isBlank() || ubicacionText.getText().isEmpty()
-            || nivelConsumoTextArea.getText().isBlank() || nivelConsumoTextArea.getText().isEmpty()) {
+            || ubicacionText.getText().isBlank() || ubicacionText.getText().isEmpty()) {
 
             JOptionPane.showMessageDialog(this, "Escriba lo que se le solicita", "Datos incompletos", JOptionPane.WARNING_MESSAGE);
         } else {
-            // Determinar si el ingrediente es cultivado o encontrado
-            boolean esCultivado = cultiva.isSelected();
-
-            // Obtener los valores de los campos
-            String nombreEspanol = nombreText.getText();
-            String nombreIndigena = nombreIndigenaText.getText();
-            String ubicacion = ubicacionText.getText();
-            String nivelConsumo = nivelConsumoTextArea.getText();
-
-            // Crear instancia del controlador
-            Ingredientes controladorIngredientes = new Ingredientes();
-
-            // Registrar el nuevo ingrediente usando el método del controlador
-            controladorIngredientes.crearIngrediente(nombreEspanol, nombreIndigena, ubicacion, nivelConsumo, esCultivado);
-
-            // Mostrar un mensaje de confirmación
-            JOptionPane.showMessageDialog(this, "Ingrediente registrado con éxito", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+            
+            if (cultiva.isSelected()) {
+                existencia= true;
+            } else {
+                existencia= false;
+            }
+            if(m.verificarIngredienteExistente(nombreText.getText())){
+                JOptionPane.showMessageDialog(this, "El ingrediente ya esta registrado", "Datos repetidos", JOptionPane.WARNING_MESSAGE);
+            }else{
+                m.agregarIngrediente(nombreText.getText(),listOfLanguages,ubicacionText.getText(),existencia,consumptionByGroup );  
+                JOptionPane.showMessageDialog(this, "Ingrediente registrado con éxito", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
-          
     }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButton7ActionPerformed
 
     private void nombreTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreTextActionPerformed
         // TODO add your handling code here:
@@ -234,6 +457,27 @@ public class CrearIngredientes extends javax.swing.JFrame {
     private void cultivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cultivaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cultivaActionPerformed
+
+    private void addBoton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBoton1ActionPerformed
+        mt.addRow(new Object[]{Lengua1.getText(),Lengua2.getText()});
+        Lengua1.setText("");
+        Lengua2.setText("");
+    }//GEN-LAST:event_addBoton1ActionPerformed
+
+    private void deleteBoton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBoton1ActionPerformed
+        mt.removeRow(jTable2.getSelectedRow());
+    }//GEN-LAST:event_deleteBoton1ActionPerformed
+
+    private void addBoton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBoton2ActionPerformed
+        mt1.addRow(new Object[]{Lengua3.getText(),Lengua4.getText(),jTextArea1.getText()});
+        Lengua3.setText("");
+        Lengua4.setText("");   
+        jTextArea1.setText("");   
+    }//GEN-LAST:event_addBoton2ActionPerformed
+
+    private void deleteBoton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBoton2ActionPerformed
+        mt1.removeRow(jTable3.getSelectedRow());
+    }//GEN-LAST:event_deleteBoton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,21 +515,37 @@ public class CrearIngredientes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Lengua1;
+    private javax.swing.JTextField Lengua2;
+    private javax.swing.JTextField Lengua3;
+    private javax.swing.JTextField Lengua4;
+    private javax.swing.JButton addBoton1;
+    private javax.swing.JButton addBoton2;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JRadioButton cultiva;
+    private javax.swing.JButton deleteBoton1;
+    private javax.swing.JButton deleteBoton2;
     private javax.swing.JRadioButton encuentra;
     private javax.swing.ButtonGroup existencia;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea nivelConsumoTextArea;
-    private javax.swing.JTextField nombreIndigenaText;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField nombreText;
     private javax.swing.JTextField ubicacionText;
     // End of variables declaration//GEN-END:variables

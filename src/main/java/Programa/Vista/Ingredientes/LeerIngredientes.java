@@ -4,10 +4,13 @@
  */
 package Programa.Vista.Ingredientes;
 
+import Programa.Controlador.Grupo;
 import Programa.Vista.Menu.MenuLeer;
 import Programa.Controlador.Ingredientes;  // Importamos el controlador
+import Programa.Controlador.Mongo;
 import javax.swing.JOptionPane;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
 
 /**
@@ -16,11 +19,20 @@ import org.bson.Document;
  */
 public class LeerIngredientes extends javax.swing.JFrame {
 
+    DefaultTableModel model = new DefaultTableModel();
     /**
      * Creates new form LeerIngredientes
      */
     public LeerIngredientes() {
         initComponents();
+        
+        model.addColumn("Nombre");
+        model.addColumn("Nombres en otros idiomas");
+        model.addColumn("Ubicación");
+        model.addColumn("Cultiva");
+        model.addColumn("Consumo por grupo");
+               
+        jTable1.setModel(model);  
         this.setLocationRelativeTo(null);                        
     }
 
@@ -36,7 +48,8 @@ public class LeerIngredientes extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton7 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gastronomia Indigena");
@@ -58,40 +71,52 @@ public class LeerIngredientes extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel3.setText("Consultar ingredientes");
 
-        jButton7.setText("Cerrar programa");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(93, 93, 93)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(105, 105, 105))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(375, 375, 375))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(353, 353, 353))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addGap(358, 358, 358)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton7)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -104,32 +129,54 @@ public class LeerIngredientes extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // Crear instancia del controlador de ingredientes
-        Ingredientes controladorIngredientes = new Ingredientes();
+    public String formatearDocument(Document doc) {
+        // Convertir el Document a String
+        String jsonString = doc.toJson();
 
-        // Obtener lista de ingredientes desde el controlador
-        List<Document> ingredientes = controladorIngredientes.obtenerIngredientes();
+        // Quitar los caracteres {}, comillas dobles, y el formateo adicional
+        String resultado = jsonString.replace("{", "")   // Quitar llaves de apertura
+                                    .replace("}", "")   // Quitar llaves de cierre
+                                    .replace("\"", "")  // Quitar comillas dobles
+                                    .trim();            // Eliminar espacios en blanco al inicio o fin
 
-        if (ingredientes != null && !ingredientes.isEmpty()) {
-            // Mostrar los ingredientes obtenidos en la consola (puedes ajustar para mostrar en un JTable o TextArea)
-            for (Document ingrediente : ingredientes) {
-                System.out.println("Nombre en español: " + ingrediente.getString("name_spanish"));
-                System.out.println("Nombre en lengua indígena: " + ingrediente.getString("name_indigenous"));
-                System.out.println("Ubicación: " + ingrediente.getString("location"));
-                System.out.println("Nivel de consumo: " + ingrediente.getString("consumption_level"));
-                System.out.println("¿Se cultiva?: " + (ingrediente.getBoolean("is_cultivated") ? "Sí" : "No"));
-                System.out.println("-------------------------");
+        return resultado;
+    }
+ 
+    private void cargarDatos(){
+        Ingredientes m = new Ingredientes();
+        String [] datos = new String [10];
+               
+        Document documentoIngrediente =  m.obtenerIngredientePorId();
+                
+        if (documentoIngrediente != null) {
+            // Obtener la lista de ingredientes
+            List<Document> ingredientes = (List<Document>) documentoIngrediente.get("ingredients");
+
+            if (ingredientes != null && !ingredientes.isEmpty()) {
+                for (Document ingrediente : ingredientes) {
+                    datos[0] = ingrediente.getString("name_spanish");
+                    Document namesIndigenousLanguages = (Document) ingrediente.get("names_indigenous_languages");
+                    
+                    datos[1] =formatearDocument(namesIndigenousLanguages);
+
+                    datos[2]= ingrediente.getString("production_location");
+                    datos[3] = ingrediente.getBoolean("exists_today").toString();
+
+                    Document consumptionByGroup = (Document) ingrediente.get("consumption_by_group");
+                    datos[4] =formatearDocument(consumptionByGroup);
+                    model.addRow(datos);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontro la información", "Error al cargar ingredientes", JOptionPane.WARNING_MESSAGE);
             }
-            JOptionPane.showMessageDialog(this, "Consulta realizada con éxito", "Consulta exitosa", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "No se encontraron ingredientes", "Consulta vacía", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El documento de ingredientes está vacio", "Error al cargar ingredientes", JOptionPane.WARNING_MESSAGE);
         }
+    }
+    
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        cargarDatos();
     }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,8 +215,9 @@ public class LeerIngredientes extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

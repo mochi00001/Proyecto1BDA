@@ -11,7 +11,8 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.ConnectionString;
 
 public class Mongo {
-    private static final String URI = "mongodb+srv://dbLuis:dbLuis12@laboratorio1.zhb0x.mongodb.net/ProyectoBDA1?retryWrites=true&w=majority";
+    Comidas c = new Comidas();
+    String URI = c.URI;
     private MongoClient mongoClient;
     private MongoDatabase database;
 

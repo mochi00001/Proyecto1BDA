@@ -4,10 +4,12 @@
  */
 package Programa.Vista.Festividad;
 
-import Programa.Vista.Menu.MenuLeer;
 import Programa.Controlador.Festividades;
-import javax.swing.JOptionPane;
+import Programa.Controlador.Mongo;
+import Programa.Vista.Menu.MenuLeer;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.bson.Document;
 
 /**
@@ -17,13 +19,21 @@ import org.bson.Document;
 public class LeerFestividades extends javax.swing.JFrame {
 
     private Festividades controller;
+   DefaultTableModel model = new DefaultTableModel();
+
     /**
      * Creates new form LeerFestividades
      */
     public LeerFestividades() {
         initComponents();
-        this.setLocationRelativeTo(null);    
-        controller = new Festividades();  // Inicializa el controlador
+        model.addColumn("Nombre");
+        model.addColumn("Fecha");
+        model.addColumn("Descripcion");
+        model.addColumn("Asistencia");
+        model.addColumn("Implicaciones");
+        
+        jTable1.setModel(model);  
+        this.setLocationRelativeTo(null); 
     }
 
     /**
@@ -35,20 +45,14 @@ public class LeerFestividades extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gastronomia Indigena");
-
-        jButton7.setText("Cerrar programa");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
 
         jButton8.setText("Retroceder");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -67,69 +71,85 @@ public class LeerFestividades extends javax.swing.JFrame {
             }
         });
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
+                        .addGap(378, 378, 378)
                         .addComponent(jLabel3)))
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(350, 350, 350)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(350, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addGap(358, 358, 358)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton7)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButton7ActionPerformed
+    private void cargarDatos(){
+        Festividades m = new Festividades();
+        String [] datos = new String [10];
+               
+        List<Document> festividades = m.obtenerFestividades();
+        
+        if (festividades != null) {
+            System.out.println("Festividades Indígenas:");
+            for (Document festividad : festividades) {
+                datos[0] = festividad.getString("Nombre_Original");
+                datos[1] =  festividad.getString("Fecha");
+                datos[2] =festividad.getString("Actividades");
+                datos[3] =festividad.getString("Quien_Puede_Asistir");
+                datos[4] =   festividad.getString("Implicaciones");
+                model.addRow(datos);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay festividades", "Leer festividades", JOptionPane.WARNING_MESSAGE);
+        } 
+    } 
+    
+    
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        cargarDatos();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         MenuLeer PasarVentana = new MenuLeer();
         PasarVentana.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-       // Consultar las festividades a través del controlador
-        List<Document> festividades = controller.consultarFestividades();
-        
-        if (festividades != null && !festividades.isEmpty()) {
-            StringBuilder resultado = new StringBuilder();
-            for (Document festividad : festividades) {
-                resultado.append("Nombre: ").append(festividad.getString("nombre"))
-                         .append("\nFecha: ").append(festividad.getString("fecha"))
-                         .append("\nDescripción: ").append(festividad.getString("descripcion"))
-                         .append("\nAsistencia: ").append(festividad.getString("asistencia"))
-                         .append("\nImplicaciones: ").append(festividad.getString("implicaciones"))
-                         .append("\n----------------------------\n");
-            }
-            JOptionPane.showMessageDialog(this, resultado.toString(), "Lista de Festividades", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "No hay festividades registradas.", "Consulta de Festividades", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,8 +188,9 @@ public class LeerFestividades extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

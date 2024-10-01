@@ -4,9 +4,21 @@
  */
 package Programa.Vista.Ingredientes;
 
+import Programa.Controlador.Grupo;
 import Programa.Vista.Menu.MenuModificar;
 import javax.swing.JOptionPane;
 import Programa.Controlador.Ingredientes;
+import Programa.Controlador.Mongo;
+import static Programa.Vista.Ingredientes.CrearIngredientes.obtenerConsumoPorGrupo;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import org.bson.Document;
+
 
 /**
  *
@@ -14,12 +26,25 @@ import Programa.Controlador.Ingredientes;
  */
 public class ModificarIngredientes extends javax.swing.JFrame {
 
+    DefaultTableModel mt = new DefaultTableModel();
+    DefaultTableModel mt1 = new DefaultTableModel();
     /**
      * Creates new form ModificarIngredientes
      */
     public ModificarIngredientes() {
         initComponents();
-        this.setLocationRelativeTo(null);        
+        this.setLocationRelativeTo(null);  
+        cultiva.setSelected(true);
+        
+        String ids []={"Grupo", "Nombre"};
+        
+        mt.setColumnIdentifiers(ids);
+        jTable2.setModel(mt);
+        
+        String ids2 []={"Nombre Grupo", "Frecuencia", "Usos"};
+        
+        mt1.setColumnIdentifiers(ids2);
+        jTable3.setModel(mt1);
     }
 
     /**
@@ -31,38 +56,42 @@ public class ModificarIngredientes extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton7 = new javax.swing.JButton();
-        nombreText = new javax.swing.JTextField();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jButton8 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        ubicacionText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        nivelConsumoTextArea = new javax.swing.JTextArea();
+        jButton6 = new javax.swing.JButton();
+        Lengua3 = new javax.swing.JTextField();
+        addBoton2 = new javax.swing.JButton();
+        deleteBoton2 = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jLabel18 = new javax.swing.JLabel();
+        Lengua4 = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         cultiva = new javax.swing.JRadioButton();
         encuentra = new javax.swing.JRadioButton();
-        jLabel2 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
-        nombreIndigenaText = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        Lengua1 = new javax.swing.JTextField();
+        addBoton1 = new javax.swing.JButton();
+        deleteBoton1 = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        nombreText = new javax.swing.JTextField();
+        ubicacionText = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        Lengua2 = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gastronomia Indigena");
-
-        jButton7.setText("Cerrar programa");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-
-        nombreText.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nombreTextActionPerformed(evt);
-            }
-        });
 
         jButton8.setText("Retroceder");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -71,31 +100,8 @@ public class ModificarIngredientes extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("Nivel de consulmo:");
-
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel3.setText("Modificar ingrediente");
-
-        jLabel4.setText("Ubicación:");
-
-        jLabel1.setText("Nombre en español:");
-
-        jLabel5.setText("Existencia:");
-
-        nivelConsumoTextArea.setColumns(20);
-        nivelConsumoTextArea.setRows(5);
-        jScrollPane1.setViewportView(nivelConsumoTextArea);
-
-        cultiva.setText("Se cultiva");
-        cultiva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cultivaActionPerformed(evt);
-            }
-        });
-
-        encuentra.setText("Se encuentra");
-
-        jLabel2.setText("Nombre en lengua indigena:");
 
         jButton6.setText("Modificar");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -104,47 +110,201 @@ public class ModificarIngredientes extends javax.swing.JFrame {
             }
         });
 
+        addBoton2.setText("Añadir");
+        addBoton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBoton2ActionPerformed(evt);
+            }
+        });
+
+        deleteBoton2.setText("Borrar");
+        deleteBoton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBoton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setText("Nombre en lengua indigena:");
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(jTable3);
+
+        jLabel18.setText("Frecuencia:");
+
+        jLabel19.setText("Usos:");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        buttonGroup1.add(cultiva);
+        cultiva.setText("Se cultiva");
+        cultiva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cultivaActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(encuentra);
+        encuentra.setText("Se encuentra");
+
+        jLabel13.setText("Lenguaje indigena:");
+
+        addBoton1.setText("Añadir");
+        addBoton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBoton1ActionPerformed(evt);
+            }
+        });
+
+        deleteBoton1.setText("Borrar");
+        deleteBoton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBoton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setText("Nombre en lengua indigena:");
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable2);
+
+        jLabel15.setText("Nombre:");
+
+        jLabel1.setText("Nombre en español:");
+
+        nombreText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreTextActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Ubicación:");
+
+        jLabel5.setText("Existencia:");
+
+        jLabel16.setText("Nombre Grupo:");
+
+        jButton9.setText("Buscar");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(nombreText, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cultiva)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(encuentra))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel13)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(Lengua1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(34, 34, 34)
+                                            .addComponent(addBoton1)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(deleteBoton1))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(jLabel15)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(Lengua2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(41, 41, 41)
+                                        .addComponent(jLabel14))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(ubicacionText, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(9, 9, 9)))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(7, 7, 7)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel18)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(Lengua4, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel16)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(Lengua3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(addBoton2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(deleteBoton2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(33, 33, 33)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(31, 31, 31))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel17)
+                                .addGap(83, 83, 83)))))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nombreText)
-                            .addComponent(nombreIndigenaText, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(95, 95, 95))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(cultiva)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(encuentra))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(ubicacionText, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(45, 45, 45))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(96, 96, 96)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(252, 252, 252))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(225, 225, 225))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,45 +312,67 @@ public class ModificarIngredientes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(nombreText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombreIndigenaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ubicacionText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(cultiva)
-                    .addComponent(encuentra))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Lengua3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Lengua4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel19)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addBoton2)
+                            .addComponent(deleteBoton2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(nombreText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ubicacionText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(cultiva)
+                            .addComponent(encuentra))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Lengua1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Lengua2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(addBoton1)
+                            .addComponent(deleteBoton1))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton7)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void nombreTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nombreTextActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         MenuModificar PasarVentana = new MenuModificar();
@@ -198,46 +380,140 @@ public class ModificarIngredientes extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton8ActionPerformed
 
+    public List<Map<String, String>> obtenerDatosIndigenas(JTable table) {
+        // Obtener el número de filas de la tabla
+        int filas = table.getRowCount();
+
+        // Crear la lista para almacenar los mapas de cada grupo indígena
+        List<Map<String, String>> listaMapas = new ArrayList<>();
+
+        // Obtener el modelo de la tabla
+        TableModel modelo = table.getModel();
+
+        // Iterar sobre las filas del JTable
+        for (int i = 0; i < filas; i++) {
+            // Obtener el nombre del grupo indígena (columna 0) y su idioma (columna 1)
+            String grupoIndigena = modelo.getValueAt(i, 0).toString();
+            String idioma = modelo.getValueAt(i, 1).toString();
+
+            // Crear un Map para almacenar el grupo indígena y su idioma
+            Map<String, String> mapa = new HashMap<>();
+            mapa.put(grupoIndigena, idioma);
+
+            // Agregar el mapa a la lista
+            listaMapas.add(mapa);
+        }
+
+        // Retornar la lista de mapas
+        return listaMapas;
+    }
+    
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // Llamar al método para obtener la lista de Map desde el JTable
+        List<Map<String, String>> listOfLanguages = obtenerDatosIndigenas(jTable2);        
+        Map<String, Map<String, String>> consumptionByGroup = obtenerConsumoPorGrupo(jTable3);
+        
+        
+        Ingredientes m = new Ingredientes();
+        boolean existencia;
+                
+        if (nombreText.getText().isEmpty() || nombreText.getText().isBlank()
+            || ubicacionText.getText().isBlank() || ubicacionText.getText().isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "Escriba lo que se le solicita", "Datos incompletos", JOptionPane.WARNING_MESSAGE);
+        } else {
+            
+            if (cultiva.isSelected()) {
+                existencia= true;
+            } else {
+                existencia= false;
+            }
+            if(!m.verificarIngredienteExistente(nombreText.getText())){
+                JOptionPane.showMessageDialog(this, "El ingrediente no existe", "Datos erroneos", JOptionPane.WARNING_MESSAGE);
+            }else{
+                m.actualizarIngrediente (nombreText.getText(),listOfLanguages,ubicacionText.getText(),existencia,consumptionByGroup );  
+                JOptionPane.showMessageDialog(this, "Ingrediente registrado con éxito", "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void addBoton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBoton2ActionPerformed
+        mt1.addRow(new Object[]{Lengua3.getText(),Lengua4.getText(),jTextArea1.getText()});
+        Lengua3.setText("");
+        Lengua4.setText("");
+        jTextArea1.setText("");
+    }//GEN-LAST:event_addBoton2ActionPerformed
+
+    private void deleteBoton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBoton2ActionPerformed
+        mt1.removeRow(jTable3.getSelectedRow());
+    }//GEN-LAST:event_deleteBoton2ActionPerformed
+
     private void cultivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cultivaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cultivaActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        String existencia = "";
+    private void addBoton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBoton1ActionPerformed
+        mt.addRow(new Object[]{Lengua1.getText(),Lengua2.getText()});
+        Lengua1.setText("");
+        Lengua2.setText("");
+    }//GEN-LAST:event_addBoton1ActionPerformed
 
-        // Validación de los campos de entrada
-        if (nombreText.getText().isEmpty() || nombreIndigenaText.getText().isBlank()
-            || ubicacionText.getText().isBlank() || nivelConsumoTextArea.getText().isBlank()) {
+    private void deleteBoton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBoton1ActionPerformed
+        mt.removeRow(jTable2.getSelectedRow());
+    }//GEN-LAST:event_deleteBoton1ActionPerformed
 
-            // Comprobar si el ingrediente es cultivado o se encuentra
-            if (cultiva.isSelected()) {
-                existencia = "Se cultiva";
-            } else if (encuentra.isSelected()) {
-                existencia = "Se encuentra";
-            }
+    private void nombreTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreTextActionPerformed
 
-            JOptionPane.showMessageDialog(this, "Escriba lo que se le solicita", "No se ha completado los datos", JOptionPane.WARNING_MESSAGE);
-        } else {
-            // Obtener valores de los campos de texto
-            String nombreEspanol = nombreText.getText();
-            String nombreIndigena = nombreIndigenaText.getText();
-            String ubicacion = ubicacionText.getText();
-            String nivelConsumo = nivelConsumoTextArea.getText();
-            boolean esCultivado = cultiva.isSelected();
-
-            // Crear instancia del controlador
-            Ingredientes controladorIngredientes = new Ingredientes();
-
-            // Modificar el ingrediente en la base de datos
-            controladorIngredientes.modificarIngrediente(
-                nombreEspanol, nombreIndigena, ubicacion, nivelConsumo, esCultivado
-            );
-
-            // Mostrar mensaje de éxito
-            JOptionPane.showMessageDialog(this, "Ingrediente modificado correctamente", "Modificación exitosa", JOptionPane.INFORMATION_MESSAGE);
+    public void separarYImprimirDatosGrupos(Document consumptionByGroup) {
+        for (String group : consumptionByGroup.keySet()) {
+            Document details = consumptionByGroup.get(group, Document.class);
+            
+            mt1.addRow(new Object[]{group,details.getString("frequency"),details.getString("uses")});
         }
+    }
+    
+    public void separarYImprimirNombres(Document namesIndigenousLanguages) {
+        for (String language : namesIndigenousLanguages.keySet()) {
+            String translation = namesIndigenousLanguages.getString(language);
+            mt.addRow(new Object[]{language,translation});
+        }
+    }
+    
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        Ingredientes m = new Ingredientes();
+        mt.getDataVector().removeAllElements();
+        mt1.getDataVector().removeAllElements();
+        if(!m.verificarIngredienteExistente(nombreText.getText())){
+                JOptionPane.showMessageDialog(this, "El grupo no existe", "Error al modificar", JOptionPane.WARNING_MESSAGE);
+        }else{
+            if (nombreText.getText().isEmpty() || nombreText.getText().isBlank()){
+                JOptionPane.showMessageDialog(this, "Escriba lo que se le solicita", "No se a completado los datos", JOptionPane.WARNING_MESSAGE);
+            } else {
+                Document ingrediente = m.buscarIngrediente(nombreText.getText());
+                  if (ingrediente != null) {
+                    ubicacionText.setText(ingrediente.getString("production_location"));
+                    
+                    Document consumptionByGroup = (Document) ingrediente.get("consumption_by_group");
+                    separarYImprimirDatosGrupos(consumptionByGroup);
+                    
+                    Document namesIndigenousLanguages = (Document) ingrediente.get("names_indigenous_languages");
+                    separarYImprimirNombres(namesIndigenousLanguages);
+                    
+                    
+                    System.out.println("Lenguas Indígenas: " + ingrediente.get("names_indigenous_languages"));
 
-    }//GEN-LAST:event_jButton6ActionPerformed
+                    if(ingrediente.getBoolean("exists_today")){
+                        cultiva.setSelected(true);
+                    }else{  
+                        encuentra.setSelected(true);
+                    }              
+                }
+                JOptionPane.showMessageDialog(this, "Información encontrada", "Información del ingrediente", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -275,20 +551,37 @@ public class ModificarIngredientes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Lengua1;
+    private javax.swing.JTextField Lengua2;
+    private javax.swing.JTextField Lengua3;
+    private javax.swing.JTextField Lengua4;
+    private javax.swing.JButton addBoton1;
+    private javax.swing.JButton addBoton2;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JRadioButton cultiva;
+    private javax.swing.JButton deleteBoton1;
+    private javax.swing.JButton deleteBoton2;
     private javax.swing.JRadioButton encuentra;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea nivelConsumoTextArea;
-    private javax.swing.JTextField nombreIndigenaText;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField nombreText;
     private javax.swing.JTextField ubicacionText;
     // End of variables declaration//GEN-END:variables

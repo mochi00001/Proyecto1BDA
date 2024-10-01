@@ -7,18 +7,31 @@ package Programa.Vista.Ingredientes;
 import Programa.Vista.Menu.MenuEliminar;
 import javax.swing.JOptionPane;
 import Programa.Controlador.Ingredientes;  // Importamos el controlador
+import javax.swing.table.DefaultTableModel;
+import org.bson.Document;
 
 /**
  *
  * @author danie
  */
 public class EliminarIngrediente extends javax.swing.JFrame {
-
+    
+    DefaultTableModel mt = new DefaultTableModel();
+    DefaultTableModel mt1 = new DefaultTableModel();
     /**
      * Creates new form EliminarIngrediente
      */
     public EliminarIngrediente() {
         initComponents();
+        String ids []={"Grupo", "Nombre"};
+        
+        mt.setColumnIdentifiers(ids);
+        jTable2.setModel(mt);
+        
+        String ids2 []={"Nombre Grupo", "Frecuencia", "Usos"};
+        
+        mt1.setColumnIdentifiers(ids2);
+        jTable3.setModel(mt1);
         this.setLocationRelativeTo(null);                
     }
 
@@ -32,22 +45,28 @@ public class EliminarIngrediente extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel3 = new javax.swing.JLabel();
-        jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        nombreText = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jButton9 = new javax.swing.JButton();
+        ubicacionLabel = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        Existencia = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gastronomia Indigena");
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel3.setText("Eliminar ingrediente");
-
-        jButton7.setText("Cerrar programa");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
 
         jButton8.setText("Retroceder");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -63,42 +82,153 @@ public class EliminarIngrediente extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setText("Información:");
+
+        nombreText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreTextActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Existencia:");
+
+        jButton9.setText("Buscar");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        ubicacionLabel.setText("Ubicación");
+
+        jLabel8.setText("Ubicación:");
+
+        Existencia.setText("Existencia");
+
+        jLabel1.setText("Nombre:");
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(jTable3);
+
+        jLabel17.setText("Nombre en lengua indigena:");
+
+        jLabel14.setText("Nombre en lengua indigena:");
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTable2);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(93, 93, 93)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(67, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(126, 126, 126))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(nombreText, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(85, 85, 85)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(21, 21, 21)
+                                        .addComponent(jLabel11))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel7)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(Existencia))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel8)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(ubicacionLabel))))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel14))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(73, 73, 73)
+                                .addComponent(jLabel17))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(313, 313, 313)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addGap(358, 358, 358)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(nombreText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(ubicacionLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(Existencia)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton7)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         MenuEliminar PasarVentana = new MenuEliminar();
@@ -107,23 +237,76 @@ public class EliminarIngrediente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // Solicitar al usuario el nombre del ingrediente a eliminar
-        String nombreIngrediente = JOptionPane.showInputDialog(this, "Ingrese el nombre del ingrediente a eliminar:");
-
-        /// Verificar si el nombre no está vacío
-        if (nombreIngrediente != null && !nombreIngrediente.isBlank()) {
-            // Crear instancia del controlador de ingredientes
-            Ingredientes controladorIngredientes = new Ingredientes();
-
-            // Eliminar el ingrediente usando el controlador (no se espera un retorno)
-            controladorIngredientes.eliminarIngrediente(nombreIngrediente);
-
-            // Mostrar un mensaje de confirmación sin necesidad de verificar el retorno
-            JOptionPane.showMessageDialog(this, "Ingrediente eliminado", "Eliminación exitosa", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Debe ingresar el nombre del ingrediente.", "Error", JOptionPane.WARNING_MESSAGE);
-        }
+        Ingredientes m = new Ingredientes();
+        
+        if(!m.verificarIngredienteExistente(nombreText.getText())){
+            JOptionPane.showMessageDialog(this, "Ingrediente no existe", "Error al eliminar", JOptionPane.WARNING_MESSAGE);
+        }else{
+            m.eliminarIngrediente(nombreText.getText());
+            ubicacionLabel.setText("Ubicación");
+            Existencia.setText("Existencia");
+            nombreText.setText("");
+            mt.getDataVector().removeAllElements();
+            jTable2.setModel(mt);
+            mt1.getDataVector().removeAllElements();
+            jTable3.setModel(mt1);
+            JOptionPane.showMessageDialog(this, "Información eliminada", "Datos Eliminados", JOptionPane.INFORMATION_MESSAGE);
+        } 
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void nombreTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreTextActionPerformed
+
+    
+    public void separarYImprimirDatosGrupos(Document consumptionByGroup) {
+        for (String group : consumptionByGroup.keySet()) {
+            Document details = consumptionByGroup.get(group, Document.class);
+            
+            mt1.addRow(new Object[]{group,details.getString("frequency"),details.getString("uses")});
+        }
+    }
+    
+    public void separarYImprimirNombres(Document namesIndigenousLanguages) {
+        for (String language : namesIndigenousLanguages.keySet()) {
+            String translation = namesIndigenousLanguages.getString(language);
+            mt.addRow(new Object[]{language,translation});
+        }
+    }
+    
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        Ingredientes m = new Ingredientes();
+        mt.getDataVector().removeAllElements();
+        mt1.getDataVector().removeAllElements();
+        if(!m.verificarIngredienteExistente(nombreText.getText())){
+                JOptionPane.showMessageDialog(this, "El grupo no existe", "Error al modificar", JOptionPane.WARNING_MESSAGE);
+        }else{
+            if (nombreText.getText().isEmpty() || nombreText.getText().isBlank()){
+                JOptionPane.showMessageDialog(this, "Escriba lo que se le solicita", "No se a completado los datos", JOptionPane.WARNING_MESSAGE);
+            } else {
+                Document ingrediente = m.buscarIngrediente(nombreText.getText());
+                  if (ingrediente != null) {
+                    ubicacionLabel.setText(ingrediente.getString("production_location"));
+                    
+                    Document consumptionByGroup = (Document) ingrediente.get("consumption_by_group");
+                    separarYImprimirDatosGrupos(consumptionByGroup);
+                    
+                    Document namesIndigenousLanguages = (Document) ingrediente.get("names_indigenous_languages");
+                    separarYImprimirNombres(namesIndigenousLanguages);
+                    
+                    
+                    System.out.println("Lenguas Indígenas: " + ingrediente.get("names_indigenous_languages"));
+
+                    if(ingrediente.getBoolean("exists_today")){
+                        Existencia.setText("Se cultiva");
+                    }else{  
+                        Existencia.setText("Se encuentra");
+                    }              
+                }
+                JOptionPane.showMessageDialog(this, "Información encontrada", "Información del ingrediente", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,9 +344,22 @@ public class EliminarIngrediente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Existencia;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable3;
+    private javax.swing.JTextField nombreText;
+    private javax.swing.JLabel ubicacionLabel;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,7 @@
 package Programa.Vista.Festividad;
 
 import Programa.Controlador.Festividades;
+import Programa.Controlador.Mongo;
 import Programa.Vista.Menu.MenuModificar;
 import javax.swing.JOptionPane;
 
@@ -42,7 +43,6 @@ public class CrearFestividades extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
         fechaText = new javax.swing.JTextField();
-        jButton7 = new javax.swing.JButton();
         nombreText = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -71,13 +71,6 @@ public class CrearFestividades extends javax.swing.JFrame {
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
-            }
-        });
-
-        jButton7.setText("Cerrar programa");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
             }
         });
 
@@ -135,7 +128,6 @@ public class CrearFestividades extends javax.swing.JFrame {
                                 .addGap(87, 87, 87)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(104, 104, 104)
@@ -171,8 +163,6 @@ public class CrearFestividades extends javax.swing.JFrame {
                 .addComponent(jButton6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton7)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -180,23 +170,21 @@ public class CrearFestividades extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // Recuperamos los valores de los campos de texto
-        String nombre = nombreText.getText();
-        String fecha = fechaText.getText();
-        String descripcion = descripcionTextArea.getText();
-        String asistencia = asistenciaTextArea.getText();
-        String implicaciones = implicacionesTextArea.getText();
-
-        // Verificamos si los campos están vacíos
-        if (nombre.isEmpty() || fecha.isEmpty() || descripcion.isEmpty() || asistencia.isEmpty() || implicaciones.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Escriba lo que se le solicita", "No se ha completado los datos", JOptionPane.WARNING_MESSAGE);
+        Festividades m = new Festividades();
+        
+       if (nombreText.getText().isEmpty() || nombreText.getText().isBlank()
+            || fechaText.getText().isBlank() || fechaText.getText().isEmpty()
+            || descripcionTextArea.getText().isBlank() || descripcionTextArea.getText().isEmpty()
+            || implicacionesTextArea.getText().isBlank() || implicacionesTextArea.getText().isEmpty()
+            || asistenciaTextArea.getText().isBlank() || asistenciaTextArea.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Escriba lo que se le solicita", "No se a completado los datos", JOptionPane.WARNING_MESSAGE);
         } else {
-            // Llamamos al controlador para insertar la festividad
-            controller.insertarFestividad(nombre, fecha, descripcion, asistencia, implicaciones);
-            JOptionPane.showMessageDialog(this, "Datos almacenados", "Datos registrados", JOptionPane.INFORMATION_MESSAGE);
-
-            // Limpiamos los campos después de la inserción
-            limpiarCampos();
+            if(m.festividadExiste(nombreText.getText())){
+                JOptionPane.showMessageDialog(this, "Festividadad ya existe", "Error al crear nueva festividad", JOptionPane.WARNING_MESSAGE);
+            }else{
+                m.agregarFestividad(nombreText.getText(),fechaText.getText(),descripcionTextArea.getText(),asistenciaTextArea.getText(),implicacionesTextArea.getText());
+                JOptionPane.showMessageDialog(this, "Datos almacenados", "Datos registrados", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
@@ -208,10 +196,6 @@ public class CrearFestividades extends javax.swing.JFrame {
         implicacionesTextArea.setText("");
     }
     
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButton7ActionPerformed
-
     private void nombreTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nombreTextActionPerformed
@@ -263,7 +247,6 @@ public class CrearFestividades extends javax.swing.JFrame {
     private javax.swing.JTextField fechaText;
     private javax.swing.JTextArea implicacionesTextArea;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
